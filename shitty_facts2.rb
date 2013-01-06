@@ -6,6 +6,9 @@ require 'pry'
 $log = Logger.new('/home/cameron/log/shitty_facts.log')
 $log.level = Logger::DEBUG
 
+class EndOfMessagesException < StandardError
+end
+
 
 class SMSClient
 
@@ -25,6 +28,9 @@ class SMSClient
       @messages = project_configuration['messages']
     else
       raise ArgumentError, "couldn't load configuration file."
+    end
+    if project_configuration['messages'].length-1 < @sms_counter
+      raise EndOfMessagesException, "couldn't find next message for project."
     end
   end
 
@@ -48,21 +54,21 @@ class SMSClient
   end
 
   def check_and_send
-    $log.debug "[Debug Log -- Called at: " + Time.now.to_s + "]"
+    
     $log.debug "SMS counter: " + @sms_counter.to_s
-    $log.debug "Last SMS time: " + @last_sms_time.to_s
+    $log.debug "Last SMS time: " + @last_sms_time.to_s if @last_sms_time
 
-    # if @last_sms_time exists, then it's NOT the first messages.
+    # if @last_sms_time exists, then it's NOT the first message.
     # We have to check whether it's been wait_time since the last message.
     if @last_sms_time
       wait_time_in_seconds = @wait_time * 60 # * 60
-      time_difference = @last_sms_time - Time.now
-      $log.debug "Time difference: " + time_difference
-      $log.debug "Wait time (seconds): " + wait_time_in_seconds
+      time_difference = Time.now - @last_sms_time
+      $log.debug "Wait time (seconds): " + wait_time_in_seconds.to_s
+      $log.debug "Time difference: " + time_difference.to_s
 
-      if time_difference > wait_time_in_seconds then
-        $log.debug "Time difference exceeded wait time. Sending next message to " + @target_number
-        $log.info "Message sent to: " + @target_number
+      if time_difference.to_i > wait_time_in_seconds
+        $log.debug "Time difference exceeded wait time. Sending next message to: " + @target_number.to_s
+        $log.info "Message sent to: " + @target_number.to_s
         send_message
       end
 
@@ -79,24 +85,32 @@ class SMSClient
     success_result = result.split(':')[1][0..-2].chomp
     if success_result == 'true'
       @last_sms_time = Time.now
-      $log.debug "Successfully send SmS at " + @last_sms_time.to_s
+      $log.debug "Successfully sent SmS at: " + @last_sms_time.to_s
       @sms_counter = @sms_counter + 1
     else
       error = result.split(':')[2][1..-3]
-      $log.debug "Failed to send SMS. Reason: " + error
-      $log.error "Failed to send SMS! (" + error + ")"
+      $log.error "Failed to send SMS. (Reason: " + error + ")"
     end
   end
 
 end
 
+$log.debug "-----------------------------------------------"
+$log.debug "[Debug Log -- Called at: " + Time.now.to_s + "]"
+
 CONFIG_FILE = "shitty.yml"
-PROJECT_NAME = "project1"
+PROJECT_NAME = "project2"
+
 begin
   our_client = SMSClient.new(CONFIG_FILE, PROJECT_NAME)
 rescue ArgumentError
-  $log.error "Failed to load configuration file."
+  $log.error "Error initializing configuration file."
   abort
+rescue EndOfMessagesException
+  $log.error "End of messages for this project."
+  abort
+else
+  $log.debug "Didn't encounter any errors."
 end
 
 $log.debug "Created SMS Client successfully."
