@@ -1,0 +1,19 @@
+project1:
+  name: test project targeting cameron
+  target: 6193585266
+  wait_time: 1
+  sms_counter: 0
+  last_sms_time:
+  messages:
+  - 'Testing 1'
+  - 'Testing 2'
+
+project2:
+  name: dealgnaid
+  target: 6196098496
+  wait_time: 8
+  sms_counter: 0
+  last_sms_time:
+  messages:
+  - 'Hey baby I love you. [1]'
+  - 'oh darling, you are just the most wonderful. [2]'
