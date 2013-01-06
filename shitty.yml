@@ -14,17 +14,22 @@ project2:
   name: dealgnaid
   target: 6196098496
   wait_time: 1
-  sms_counter: 0
-  last_sms_time: 
+  sms_counter: 4
+  last_sms_time: 2013-01-06 15:10:03.286710279 -08:00
   messages:
   - Hey baby I love you. [1]
-  - oh darling, you are just the most wonderful. [2]
+  - oh darling you are just the most wonderful. [2]
+  - Good morning babay! How are you today? Love youuuuuu
+  - Waiting for your pancakes? Gosh girl you are so beautiful.
+  - Sorry I'm spamming you. Thought this was working by now.
+  - I wouldn't rather be anywhere than kissing you good morning and making you cauldron
+    cakes
 project3:
   name: assualt upon roy
   target: 6197294337
   wait_time: 2
-  sms_counter: 0
-  last_sms_time: 
+  sms_counter: 1
+  last_sms_time: 2013-01-06 15:15:04.431522295 -08:00
   messages:
   - Welcome to Jade's Pregnancy Facts -- A new service delivered directly to your
     phone! Send 'subscribe' for daily facts, or choose 'stop' to avoid further messages.
@@ -37,8 +42,18 @@ project3:
     drastically! This is hypothesized to help them avoid toxins.
   - (Jade's Pregnancy Facts) -- Did you know that your contractions won't stop after
     birth? But luckily you'll be too high to notice.
-  - (Jade's Pregnancy Facts) -- During your pregnancy, your feet can grow up to one full shoe size! Your feet will start to lose their arch and stretch out. Wow! Flat feet!
-  - (Jade's Pregnancy Facts) -- Did you know that your baby-daddy may also show signs of pregnancy? The Couvade Syndrome causes men to start gaining weight, get morning sickness or even cramps!
-  - (Jade's Pregnancy Facts) -- We hope you're enjoying your subscription to our service. We would like to take this opportunity to let you know that we also have a new, exciting fact-service emerging in the hot market of Cat Facts! Text 'catfacts' back to subscribe at NO EXTRA COST!
-  - (Jade's Pregnancy Facts) -- Nigeria has the highest twinning rate in the world, at 4.5%; This is attributed to a large consumption of yams.
-  - (Jade's Pregnancy Facts) -- The average size of a full-term baby in the U.S. is 8 pounds. This is an increase from an average size of 6 pounds 30 years ago. Wow! That's a lot of burger!
+  - (Jade's Pregnancy Facts) -- During your pregnancy, your feet can grow up to one
+    full shoe size! Your feet will start to lose their arch and stretch out. Wow!
+    Flat feet!
+  - (Jade's Pregnancy Facts) -- Did you know that your baby-daddy may also show signs
+    of pregnancy? The Couvade Syndrome causes men to start gaining weight, get morning
+    sickness or even cramps!
+  - (Jade's Pregnancy Facts) -- We hope you're enjoying your subscription to our service.
+    We would like to take this opportunity to let you know that we also have a new,
+    exciting fact-service emerging in the hot market of Cat Facts! Text 'catfacts'
+    back to subscribe at NO EXTRA COST!
+  - (Jade's Pregnancy Facts) -- Nigeria has the highest twinning rate in the world,
+    at 4.5%; This is attributed to a large consumption of yams.
+  - (Jade's Pregnancy Facts) -- The average size of a full-term baby in the U.S. is
+    8 pounds. This is an increase from an average size of 6 pounds 30 years ago. Wow!
+    That's a lot of burger!

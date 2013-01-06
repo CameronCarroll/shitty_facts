@@ -63,7 +63,7 @@ class SMSClient
     # if @last_sms_time exists, then it's NOT the first message.
     # We have to check whether it's been wait_time since the last message.
     if @last_sms_time
-      wait_time_in_seconds = @wait_time * 60 # * 60
+      wait_time_in_seconds = @wait_time * 60 * 60
       time_difference = Time.now - @last_sms_time
       $log.debug "Wait time (seconds): " + wait_time_in_seconds.to_s
       $log.debug "Time difference: " + time_difference.to_s
@@ -100,8 +100,8 @@ end
 $log.debug "-----------------------------------------------"
 $log.debug "[Debug Log -- Called at: " + Time.now.to_s + "]"
 
-CONFIG_FILE = "shitty.yml"
-PROJECT_NAME = "project2"
+CONFIG_FILE = "/home/cameron/code/ruby/shitty_facts/shitty.yml"
+PROJECT_NAME = "project3"
 
 begin
   our_client = SMSClient.new(CONFIG_FILE, PROJECT_NAME)
@@ -111,8 +111,6 @@ rescue ArgumentError
 rescue EndOfMessagesException
   $log.error "End of messages for this project."
   abort
-else
-  $log.debug "Didn't encounter any errors."
 end
 
 $log.debug "Created SMS Client successfully."
