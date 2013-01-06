@@ -1,5 +1,10 @@
 require 'rubygems'
 require 'light_daemon'
+require 'logger'
+
+log = Logger.new('/home/cameron/log/shitty_facts.log')
+log.level = Logger::DEBUG
+
 
 class SMSClient
 
@@ -19,40 +24,61 @@ class SMSClient
   end
 
   def call
+
+    File.open(logfile, 'w') do |_io|
+      $stdout.reopen(_io)
+      $stderr.reopen(_io)
+    end
+
+    log.debug "[Debug Log -- Called at: " + Time.now + "]"
+    log.debug "SMS counter: " + @sms_counter
+    log.debug "Last SMS time: " + @last_sms_time
+
     unless last_sms_time
+      log.debug "last_sms_time not found... sending first message to " + @target_number
       send_message_and_sleep
     end
 
-    wait_time_in_seconds = wait_time * 60 * 60
+    wait_time_in_seconds = @wait_time * 60 # * 60
     time_difference = @last_sms_time - Time.now
+    log.debug "Time difference: " + time_difference
+    log.debug "Wait time (seconds): " + wait_time_in_seconds
 
     if time_difference > wait_time_in_seconds
+      log.debug "Time difference exceeded wait time. Sending next message to " + @target_number
       send_message_and_sleep
     end
-
-
-    sleep 900 # Wait 900 seconds or 15 minutes before checking again
-    return true # Call this function again
   end
 
   def send_message_and_sleep
     message = @messages[@sms_counter]
-    `curl http://textbelt.com/text -d number=#{@target_number} -d "message=#{message}"`
-    @last_sms_time = Time.now
-    @sms_counter++
-    sleep(900)
-    return true
+    result = `curl http://textbelt.com/text -d number=#{@target_number} -d "message=#{message}"`
+    if result.split(':')[1][0..-2].chomp! == 'true'
+      @last_sms_time = Time.now
+      log.debug "Successfully sent SMS at " + @last_sms_time
+      @sms_counter++
+      sleep(60)
+      return true
+    else
+      log.debug "Failed to send SMS. Reason: " + result.split(':')[2][1..-3]
+      return false
+    end
+
+    
   end
 end
 
 messages = [
-            "Test message 1.",
-            "Test message 2."
+            "Hey darling, I adore you. [1]",
+            "Hi again baby. You're the absolute most wonderful creature <3 :) [2]."
 ]
 
 target = 6193585266
 
-wait_time = 1 #hours
+wait_time = 1 # * 60 seconds, normally x * 3600
 
 our_client = SMSClient.new(target, wait_time, messages)
+log.debug "Starting up SMSClient..."
+log.debug "Target number: " + target
+log.debug "Wait time (minutes): " + wait_time
 LightDaemon::Daemon.start(our_client, :children => 1, :pid_file => "/tmp/shitty_daemon.pid")
