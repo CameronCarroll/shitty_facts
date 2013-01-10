@@ -82,7 +82,7 @@ class SMSClient
       send_message
     end
 
-    $log.debug "Unsent messages remaining: " + (@messages.length - @sms_counter-1).to_s
+    $log.debug "Unsent messages remaining: " + (@messages.length - @sms_counter).to_s
   end
 
   def send_message
