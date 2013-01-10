@@ -69,8 +69,7 @@ class SMSClient
       $log.debug "Time since last message: " + time_difference.to_s + " seconds"
 
       if time_difference.to_i > wait_time_in_seconds
-        $log.debug "Time waited > " + wait_time_in_seconds + " seconds; Sending next message to: " + @target_number.to_s
-        $log.info "Message sent to: " + @target_number.to_s
+        $log.debug "Time waited > " + wait_time_in_seconds.to_s + " seconds; Sending next message to: " + @target_number.to_s
         send_message
       else
         time_remaining = wait_time_in_seconds - time_difference
