@@ -106,7 +106,7 @@ $log.debug "-----------------------------------------------"
 $log.debug "[Debug Log -- Called at: " + Time.now.to_s + "]"
 
 CONFIG_FILE = "/home/cameron/code/ruby/shitty_facts/shitty.yml"
-PROJECT_NAME = "project3"
+PROJECT_NAME = "project4"
 
 begin
   our_client = SMSClient.new(CONFIG_FILE, PROJECT_NAME)
